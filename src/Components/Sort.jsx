@@ -6,6 +6,11 @@ export default function Sort() {
 	const [isActive, setActive] = useState(false);
 	const [activeSortId, setActiveSortId] = useState(0);
 
+	const handleChooseSort = (sortId) => {
+		setActiveSortId(sortId);
+		setActive(false);
+	};
+
 	return (
 		<div className="sort">
 			<div className="sort__label">
@@ -22,7 +27,9 @@ export default function Sort() {
 					/>
 				</svg>
 				<b>Сортировка по:</b>
-				<span onClick={() => setActive(!isActive)}>популярности</span>
+				<span onClick={() => setActive(!isActive)}>
+					{sortTypes[activeSortId]}
+				</span>
 			</div>
 			{isActive && (
 				<div className="sort__popup">
@@ -31,7 +38,7 @@ export default function Sort() {
 							return (
 								<li
 									key={i}
-									onClick={() => setActiveSortId(i)}
+									onClick={() => handleChooseSort(i)}
 									className={activeSortId === i ? 'active' : ''}
 								>
 									{type}
