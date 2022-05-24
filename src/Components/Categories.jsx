@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCategoryId } from '../redux/slices/filterSlice';
 
 const categories = [
 	'Все',
@@ -10,10 +12,19 @@ const categories = [
 ];
 
 export default function Categories() {
-	const [activeCategory, setActiveCategory] = useState(0);
+	// const [activeCategory, setActiveCategory] = useState(0);
+
+	const activeCategory = useSelector(
+		(state) => state.filterSliceReducer.categoryId
+	);
+
+	console.log('activeCategory', activeCategory);
+
+	const dispatch = useDispatch();
 
 	const onClickCategory = (index) => {
-		setActiveCategory(index);
+		dispatch(setCategoryId(index));
+		// setActiveCategory(index);
 	};
 
 	return (

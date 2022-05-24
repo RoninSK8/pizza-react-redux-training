@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSortType } from '../redux/slices/filterSlice';
 
 const sortTypes = ['популярности', 'цене', 'алфавиту'];
 
 export default function Sort() {
 	const [isActive, setActive] = useState(false);
-	const [activeSortId, setActiveSortId] = useState(0);
+
+	const activeSortId = useSelector((state) =>
+		sortTypes.indexOf(state.filterSliceReducer.sort.name)
+	);
+
+	const dispatch = useDispatch();
 
 	const handleChooseSort = (sortId) => {
-		setActiveSortId(sortId);
+		dispatch(setSortType(sortTypes[sortId]));
 		setActive(false);
 	};
 
