@@ -16,9 +16,7 @@ const filterSlice = createSlice({
 			state.categoryId = payload;
 		},
 		setSortType(state, { payload }) {
-			// console.log('payload', payload);
 			state.sort.name = payload;
-			// state.sort.property = property;
 		},
 	},
 });
