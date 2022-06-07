@@ -6,12 +6,13 @@ import Categories from '../Components/Categories';
 import Sort from '../Components/Sort';
 import PizzaBlock from '../Components/PizzaBlock';
 import Skeleton from '../Components/PizzaBlock/Skeleton';
+import Pagination from '../Components/Pagination';
 
 export default function Home() {
 	const [pizzas, setPizzas] = useState([]);
 	const [isLoading, setLoading] = useState(true);
 
-	const { sort, categoryId, searchValue } = useSelector(
+	const { sort, categoryId, searchValue, currentPage } = useSelector(
 		(state) => state.filterSliceReducer
 	);
 
@@ -25,7 +26,7 @@ export default function Home() {
 			setLoading(true);
 			try {
 				const res = await axios.get(
-					`https://6285265d3060bbd34745a43b.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}${search}`
+					`https://6285265d3060bbd34745a43b.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
 				);
 				setPizzas(res.data);
 			} catch (error) {
@@ -36,7 +37,7 @@ export default function Home() {
 		};
 
 		fetchPizzas();
-	}, [sort, categoryId, searchValue]);
+	}, [sort, categoryId, searchValue, currentPage]);
 
 	return (
 		<>
@@ -52,11 +53,8 @@ export default function Home() {
 					  pizzas.map((pizza) => {
 							return <PizzaBlock key={pizza.id} {...pizza} />;
 					  })}
-				{/* {pizzas &&
-							pizzas.map((pizza) => {
-								return <PizzaBlock key={pizza.id} {...pizza} />;
-							})} */}
 			</div>
+			<Pagination />
 		</>
 	);
 }
