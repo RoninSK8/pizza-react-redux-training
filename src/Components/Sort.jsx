@@ -1,30 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSortType } from '../redux/slices/filterSlice';
 
 // const sortTypes = ['популярности', 'цене', 'алфавиту'];
 const sortTypes = [
-	{ name: 'популярности', sortProperty: 'rating' },
-	{ name: 'цене', sortProperty: 'price' },
-	{ name: 'алфавиту', sortProperty: 'title' },
+	{ name: 'популярности (DESC)', sortProperty: 'rating' },
+	{ name: 'популярности (ASC)', sortProperty: '-rating' },
+	{ name: 'цене (DESC)', sortProperty: 'price' },
+	{ name: 'цене (ASC)', sortProperty: '-price' },
+	{ name: 'алфавиту (DESC)', sortProperty: 'title' },
+	{ name: 'алфавиту (ASC)', sortProperty: '-title' },
 ];
 
 export default function Sort() {
 	const [isActive, setActive] = useState(false);
-
-	const activeSortId = useSelector((state) =>
-		sortTypes.indexOf(state.filterSliceReducer.sort.name)
-	);
-
+	const sortRef = useRef();
+	const sort = useSelector((state) => state.filterSliceReducer.sort);
 	const dispatch = useDispatch();
 
-	const handleChooseSort = (sortId) => {
-		dispatch(setSortType(sortTypes[sortId]));
+	const handleChooseSort = (sort) => {
+		dispatch(setSortType(sort));
 		setActive(false);
 	};
 
+	useEffect(() => {
+		const handleClickOutside = (event) => {
+			if (!event.path.includes(sortRef.current)) {
+				setActive(false);
+			}
+		};
+		document.body.addEventListener('click', handleClickOutside);
+		return () => document.body.removeEventListener('click', handleClickOutside);
+	}, []);
+
 	return (
-		<div className="sort">
+		<div ref={sortRef} className="sort">
 			<div className="sort__label">
 				<svg
 					width="10"
@@ -39,21 +49,19 @@ export default function Sort() {
 					/>
 				</svg>
 				<b>Сортировка по:</b>
-				<span onClick={() => setActive(!isActive)}>
-					{sortTypes[activeSortId]}
-				</span>
+				<span onClick={() => setActive(!isActive)}>{sort.name}</span>
 			</div>
 			{isActive && (
 				<div className="sort__popup">
 					<ul>
-						{sortTypes.map((type, i) => {
+						{sortTypes.map((sortType, i) => {
 							return (
 								<li
 									key={i}
-									onClick={() => handleChooseSort(i)}
-									className={activeSortId === i ? 'active' : ''}
+									onClick={() => handleChooseSort(sortType)}
+									className={sort.name === sortType.name ? 'active' : ''}
 								>
-									{type}
+									{sortType.name}
 								</li>
 							);
 						})}

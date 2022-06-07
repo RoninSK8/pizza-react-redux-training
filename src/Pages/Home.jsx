@@ -15,12 +15,12 @@ export default function Home() {
 	useEffect(() => {
 		setLoading(true);
 		const category = categoryId > 0 ? `category=${categoryId}` : '';
-		const sortBy = sort.name;
-		// const order = sort.property;
+		const sortBy = sort.sortProperty.replace('-', '');
+		const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
+
 		console.log(sort, categoryId);
-		// &sortBy=${sortBy}&order=${order}
 		fetch(
-			`https://6285265d3060bbd34745a43b.mockapi.io/items?${category}&sortBy=${sortBy}`
+			`https://6285265d3060bbd34745a43b.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}`
 		)
 			.then((res) => res.json())
 			.then((arr) => {
