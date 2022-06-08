@@ -12,19 +12,14 @@ const categories = [
 ];
 
 export default function Categories() {
-	// const [activeCategory, setActiveCategory] = useState(0);
-
 	const activeCategory = useSelector(
 		(state) => state.filterSliceReducer.categoryId
 	);
-
-	console.log('activeCategory', activeCategory);
 
 	const dispatch = useDispatch();
 
 	const onClickCategory = (index) => {
 		dispatch(setCategoryId(index));
-		// setActiveCategory(index);
 	};
 
 	return (

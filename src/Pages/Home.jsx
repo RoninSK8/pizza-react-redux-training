@@ -1,27 +1,57 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import qs from 'qs';
 
 import Categories from '../Components/Categories';
-import Sort from '../Components/Sort';
+import Sort, { sortTypes } from '../Components/Sort';
 import PizzaBlock from '../Components/PizzaBlock';
 import Skeleton from '../Components/PizzaBlock/Skeleton';
 import Pagination from '../Components/Pagination';
+import { setFilters } from '../redux/slices/filterSlice';
 
 export default function Home() {
 	const [pizzas, setPizzas] = useState([]);
 	const [isLoading, setLoading] = useState(true);
 
+	const isMounted = useRef(false);
+	const isSearch = useRef(false);
+
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+
 	const { sort, categoryId, searchValue, currentPage } = useSelector(
 		(state) => state.filterSliceReducer
 	);
 
+	// Если есть параметры в строке - отправляет их в редакс
 	useEffect(() => {
+		console.log('сработал 1й');
+		if (window.location.search) {
+			console.log('сработало условие 1го');
+			console.log(window.location.search);
+
+			const params = qs.parse(window.location.search.substring(1));
+			console.log(params);
+			const sort = sortTypes.find(
+				(sortType) => sortType.sortProperty === params.sortProperty
+			);
+			// console.log(sortTypes.find());
+
+			dispatch(setFilters({ ...params, sort }));
+			isSearch.current = true;
+		}
+	}, []);
+
+	//
+	useEffect(() => {
+		// const category = categoryId > 0 ? `category=${categoryId}` : '';
 		const category = categoryId > 0 ? `category=${categoryId}` : '';
 		const sortBy = sort.sortProperty.replace('-', '');
 		const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
 		const search = searchValue ? `&search=${searchValue}` : '';
-
+		console.log('сработал 2й');
 		const fetchPizzas = async () => {
 			setLoading(true);
 			try {
@@ -35,9 +65,28 @@ export default function Home() {
 				setLoading(false);
 			}
 		};
-
-		fetchPizzas();
+		console.log();
+		if (!isSearch.current) {
+			console.log('сработало условие 2го');
+			fetchPizzas();
+		}
+		isSearch.current = false;
 	}, [sort, categoryId, searchValue, currentPage]);
+
+	// Отправляет параметры в строку если это не первый рендер
+	useEffect(() => {
+		console.log('сработал 3й');
+		if (isMounted.current) {
+			console.log('сработало условие 3го');
+			const queryString = qs.stringify({
+				sortProperty: sort.sortProperty,
+				categoryId,
+				currentPage,
+			});
+			navigate(`?${queryString}`);
+		}
+		isMounted.current = true;
+	}, [sort.sortProperty, categoryId, currentPage]);
 
 	return (
 		<>
