@@ -22,6 +22,24 @@ export default function Sort() {
 		setActive(false);
 	};
 
+	const handleSortPropertyChange = () => {
+		const toggleSortOrder = (sort) => {
+			const currentSortName = sort.name;
+			if (sort.sortProperty.includes('-')) {
+				return {
+					name: `${currentSortName.split(' ')[0]} (ASC)`,
+					sortProperty: sort.sortProperty.replace('-', ''),
+				};
+			}
+			return {
+				name: `${currentSortName.split(' ')[0]} (DESC)`,
+				sortProperty: `-${sort.sortProperty}`,
+			};
+		};
+		const newSort = toggleSortOrder(sort);
+		dispatch(setSortType({ ...newSort }));
+	};
+
 	useEffect(() => {
 		const handleClickOutside = (event) => {
 			if (!event.path.includes(sortRef.current)) {
@@ -36,16 +54,27 @@ export default function Sort() {
 		<div ref={sortRef} className="sort">
 			<div className="sort__label">
 				<svg
-					width="10"
-					height="6"
-					viewBox="0 0 10 6"
-					fill="none"
+					onClick={handleSortPropertyChange}
+					version="1.1"
+					id="Capa_1"
 					xmlns="http://www.w3.org/2000/svg"
+					x="0px"
+					y="0px"
+					width="20px"
+					height="20px"
+					viewBox="0 0 36.678 36.678"
+					space="preserve"
 				>
-					<path
-						d="M10 5C10 5.16927 9.93815 5.31576 9.81445 5.43945C9.69075 5.56315 9.54427 5.625 9.375 5.625H0.625C0.455729 5.625 0.309245 5.56315 0.185547 5.43945C0.061849 5.31576 0 5.16927 0 5C0 4.83073 0.061849 4.68424 0.185547 4.56055L4.56055 0.185547C4.68424 0.061849 4.83073 0 5 0C5.16927 0 5.31576 0.061849 5.43945 0.185547L9.81445 4.56055C9.93815 4.68424 10 4.83073 10 5Z"
-						fill="#2C2C2C"
-					/>
+					<g>
+						<path
+							d="M29.696,20.076c0.088,0.16,0.08,0.354-0.021,0.51L19.395,36.449c-0.091,0.139-0.241,0.224-0.407,0.229
+		c-0.004,0-0.008,0-0.015,0c-0.157,0-0.31-0.076-0.403-0.205L6.998,20.609c-0.11-0.15-0.127-0.354-0.041-0.521
+		c0.085-0.168,0.257-0.272,0.444-0.272h21.855C29.443,19.814,29.609,19.914,29.696,20.076z M7.401,16.865h21.855
+		c0.008,0,0.017,0,0.021,0c0.275,0,0.5-0.225,0.5-0.5c0-0.156-0.07-0.295-0.184-0.388L18.086,0.205
+		C17.989,0.072,17.821,0.002,17.668,0c-0.165,0.005-0.315,0.09-0.406,0.229L6.982,16.094c-0.101,0.152-0.105,0.35-0.021,0.512
+		C7.05,16.765,7.218,16.865,7.401,16.865z"
+						/>
+					</g>
 				</svg>
 				<b>Сортировка по:</b>
 				<span onClick={() => setActive(!isActive)}>{sort.name}</span>
