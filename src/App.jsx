@@ -6,6 +6,7 @@ import Header from './Components/Header';
 import Home from './Pages/Home';
 import NotFound from './Pages/NotFound';
 import Cart from './Pages/Cart';
+import PizzaPage from './Pages/PizzaPage';
 
 function App() {
 	return (
@@ -16,6 +17,7 @@ function App() {
 					<Routes>
 						<Route path="/" element={<Home />} />
 						<Route path="/cart" element={<Cart />} />
+						<Route path="/pizza/:id" element={<PizzaPage />} />
 						<Route path="*" element={<NotFound />} />
 					</Routes>
 				</div>

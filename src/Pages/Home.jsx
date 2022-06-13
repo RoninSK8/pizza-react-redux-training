@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import qs from 'qs';
 
@@ -99,9 +99,7 @@ export default function Home() {
 				{isLoading
 					? [...new Array(6)].map((_, i) => <Skeleton key={i} />)
 					: pizzas &&
-					  pizzas.map((pizza) => {
-							return <PizzaBlock key={pizza.id} {...pizza} />;
-					  })}
+					  pizzas.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
 			</div>
 			<Pagination />
 		</>
