@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 
 const FullPizza = () => {
 	const { id } = useParams();
+	const navigate = useNavigate();
 	const [pizza, setPizza] = useState();
 	useEffect(() => {
 		const fetchItem = async () => {
@@ -15,6 +16,7 @@ const FullPizza = () => {
 				console.log(data);
 			} catch (error) {
 				console.log(error);
+				navigate('/');
 			}
 		};
 
@@ -27,7 +29,7 @@ const FullPizza = () => {
 
 	return (
 		<div className="container">
-			<img src={pizza.imageUrl} />
+			<img src={pizza.imageUrl} alt={`фото пицца ${pizza.title}`} />
 			<h2>{pizza.title}</h2>
 			<h4>{pizza.price}</h4>
 			<Link to="/">
