@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { addItem } from '../../redux/slices/cartSlice';
 
 const typeNames = ['тонкое', 'традиционное'];
 
@@ -10,15 +13,36 @@ export default function PizzaBlock({
 	imageUrl,
 	sizes,
 	types,
+	prices,
 }) {
-	const [activeType, setActiveType] = useState(0);
-	const [activeSize, setActiveSize] = useState(0);
+	const [activeType, setActiveType] = useState(types[0]);
+	const [activeSize, setActiveSize] = useState(sizes[0]);
+	const dispatch = useDispatch();
 
 	const handleChooseType = (i) => {
 		setActiveType(i);
 	};
 	const handleChooseSize = (i) => {
 		setActiveSize(i);
+	};
+
+	const handleAddItem = () => {
+		const currentItemPrice = prices.filter(
+			(price) => price.size === activeSize
+		)[0].price;
+		dispatch(
+			addItem({
+				id,
+				title,
+				imageUrl,
+				size: activeSize,
+				type: activeType,
+				price: currentItemPrice,
+				count: 1,
+			})
+		);
+		console.log(activeSize);
+		console.log(currentItemPrice);
 	};
 	return (
 		<div className="pizza-block">
@@ -47,8 +71,8 @@ export default function PizzaBlock({
 							return (
 								<li
 									key={i}
-									onClick={() => handleChooseSize(i)}
-									className={activeSize === i ? 'active' : ''}
+									onClick={() => handleChooseSize(size)}
+									className={activeSize === size ? 'active' : ''}
 								>
 									{size} см.
 								</li>
@@ -58,7 +82,10 @@ export default function PizzaBlock({
 			</div>
 			<div className="pizza-block__bottom">
 				<div className="pizza-block__price">от {price} ₽</div>
-				<div className="button button--outline button--add">
+				<div
+					className="button button--outline button--add"
+					onClick={handleAddItem}
+				>
 					<svg
 						width="12"
 						height="12"
