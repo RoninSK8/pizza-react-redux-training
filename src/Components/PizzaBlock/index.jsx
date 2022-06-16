@@ -8,7 +8,6 @@ const typeNames = ['тонкое', 'традиционное'];
 
 export default function PizzaBlock({
 	id,
-	price,
 	title,
 	imageUrl,
 	sizes,
@@ -19,6 +18,14 @@ export default function PizzaBlock({
 	const [activeSize, setActiveSize] = useState(sizes[0]);
 	const dispatch = useDispatch();
 
+	const { items } = useSelector((state) => state.cartSliceReducer);
+	const currentCount = items
+		.filter((item) => item.id === id)
+		.reduce((count, item) => {
+			count += item.count;
+			return count;
+		}, 0);
+
 	const handleChooseType = (i) => {
 		setActiveType(i);
 	};
@@ -26,10 +33,11 @@ export default function PizzaBlock({
 		setActiveSize(i);
 	};
 
+	const currentItemPrice = prices.filter(
+		(price) => price.size === activeSize
+	)[0].price;
+
 	const handleAddItem = () => {
-		const currentItemPrice = prices.filter(
-			(price) => price.size === activeSize
-		)[0].price;
 		dispatch(
 			addItem({
 				id,
@@ -57,8 +65,8 @@ export default function PizzaBlock({
 							return (
 								<li
 									key={i}
-									onClick={() => handleChooseType(i)}
-									className={activeType === i ? 'active' : ''}
+									onClick={() => handleChooseType(typeId)}
+									className={activeType === typeId ? 'active' : ''}
 								>
 									{typeNames[typeId]}
 								</li>
@@ -81,7 +89,7 @@ export default function PizzaBlock({
 				</ul>
 			</div>
 			<div className="pizza-block__bottom">
-				<div className="pizza-block__price">от {price} ₽</div>
+				<div className="pizza-block__price">{currentItemPrice} ₽</div>
 				<div
 					className="button button--outline button--add"
 					onClick={handleAddItem}
@@ -99,7 +107,7 @@ export default function PizzaBlock({
 						/>
 					</svg>
 					<span>Добавить</span>
-					<i>2</i>
+					{currentCount > 0 ? <i>{currentCount}</i> : ''}
 				</div>
 			</div>
 		</div>
