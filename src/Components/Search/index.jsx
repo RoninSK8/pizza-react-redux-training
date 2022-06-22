@@ -28,6 +28,7 @@ const Search = () => {
 	);
 
 	const handleClear = () => {
+		setValue('');
 		dispatch(setSearchValue(''));
 		inputRef.current.focus();
 	};

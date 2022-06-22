@@ -107,10 +107,24 @@ export default function Home() {
 			</div>
 			<h2 className="content__title">Все пиццы</h2>
 			<div className="content__items">
-				{status === 'loading'
+				{/* {status === 'loading'
 					? [...new Array(6)].map((_, i) => <Skeleton key={i} />)
 					: items &&
-					  items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
+					  items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)} */}
+
+				{(status === 'loading' &&
+					[...new Array(6)].map((_, i) => <Skeleton key={i} />)) ||
+					(status === 'error' && (
+						<div className="content__error-info">
+							<h2>Произошла ошибка 😕</h2>
+							<p>
+								К сожалению, не удалось получить пиццы. Попробуйте повторить
+								попытку позже.
+							</p>
+						</div>
+					)) ||
+					(status === 'success' &&
+						items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />))}
 			</div>
 			<Pagination />
 		</>
