@@ -1,6 +1,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCategoryId } from '../redux/slices/filterSlice';
+import {
+	selectActiveCategory,
+	setCategoryId,
+} from '../redux/slices/filterSlice';
 
 const categories = [
 	'Все',
@@ -12,9 +15,7 @@ const categories = [
 ];
 
 export default function Categories() {
-	const activeCategory = useSelector(
-		(state) => state.filterSliceReducer.categoryId
-	);
+	const activeCategory = useSelector(selectActiveCategory);
 
 	const dispatch = useDispatch();
 
