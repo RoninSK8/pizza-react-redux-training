@@ -9,14 +9,14 @@ import Sort, { sortTypes } from '../Components/Sort';
 import PizzaBlock from '../Components/PizzaBlock';
 import Skeleton from '../Components/PizzaBlock/Skeleton';
 import Pagination from '../Components/Pagination';
-import { setFilters } from '../redux/slices/filterSlice';
-import { fetchPizzas } from '../redux/slices/pizzaSlice';
+import { selectFilters, setFilters } from '../redux/slices/filterSlice';
+import { fetchPizzas, selectPizzas } from '../redux/slices/pizzaSlice';
 
 export default function Home() {
-	const [pizzas, setPizzas] = useState([]);
-	const [isLoading, setLoading] = useState(true);
+	// const [pizzas, setPizzas] = useState([]);
+	// const [isLoading, setLoading] = useState(true);
 
-	const { items, status } = useSelector((state) => state.pizzaSliceReducer);
+	const { items, status } = useSelector(selectPizzas);
 
 	const isMounted = useRef(false);
 	const isSearch = useRef(false);
@@ -24,9 +24,8 @@ export default function Home() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
-	const { sort, categoryId, searchValue, currentPage } = useSelector(
-		(state) => state.filterSliceReducer
-	);
+	const { sort, categoryId, searchValue, currentPage } =
+		useSelector(selectFilters);
 
 	const getPizzas = async () => {
 		const category = categoryId > 0 ? `category=${categoryId}` : '';

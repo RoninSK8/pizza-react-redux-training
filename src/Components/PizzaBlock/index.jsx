@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { addItem } from '../../redux/slices/cartSlice';
+import { addItem, selectCart } from '../../redux/slices/cartSlice';
 
 const typeNames = ['тонкое', 'традиционное'];
 
@@ -18,7 +18,7 @@ export default function PizzaBlock({
 	const [activeSize, setActiveSize] = useState(sizes[0]);
 	const dispatch = useDispatch();
 
-	const { items } = useSelector((state) => state.cartSliceReducer);
+	const { items } = useSelector(selectCart);
 	const currentCount = items
 		.filter((item) => item.id === id)
 		.reduce((count, item) => {
