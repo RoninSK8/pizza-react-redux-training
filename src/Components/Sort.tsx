@@ -2,7 +2,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectSort, setSortType } from '../redux/slices/filterSlice';
 
-export const sortTypes = [
+type sortItem = {
+	name: string;
+	sortProperty: string;
+};
+
+export const sortTypes: sortItem[] = [
 	{ name: 'популярности (DESC)', sortProperty: 'rating' },
 	{ name: 'популярности (ASC)', sortProperty: '-rating' },
 	{ name: 'цене (DESC)', sortProperty: 'price' },
@@ -11,19 +16,19 @@ export const sortTypes = [
 	{ name: 'алфавиту (ASC)', sortProperty: '-title' },
 ];
 
-export default function Sort() {
+const Sort: React.FC = () => {
 	const [isActive, setActive] = useState(false);
-	const sortRef = useRef();
+	const sortRef = useRef<HTMLDivElement>(null);
 	const sort = useSelector(selectSort);
 	const dispatch = useDispatch();
 
-	const handleChooseSort = (sort) => {
+	const handleChooseSort = (sort: sortItem) => {
 		dispatch(setSortType(sort));
 		setActive(false);
 	};
 
 	const handleSortPropertyChange = () => {
-		const toggleSortOrder = (sort) => {
+		const toggleSortOrder = (sort: sortItem) => {
 			const currentSortName = sort.name;
 			if (sort.sortProperty.includes('-')) {
 				return {
@@ -41,7 +46,7 @@ export default function Sort() {
 	};
 
 	useEffect(() => {
-		const handleClickOutside = (event) => {
+		const handleClickOutside = (event: any) => {
 			if (!event.path.includes(sortRef.current)) {
 				setActive(false);
 			}
@@ -63,7 +68,6 @@ export default function Sort() {
 					width="20px"
 					height="20px"
 					viewBox="0 0 36.678 36.678"
-					space="preserve"
 				>
 					<g>
 						<path
@@ -98,4 +102,6 @@ export default function Sort() {
 			)}
 		</div>
 	);
-}
+};
+
+export default Sort;

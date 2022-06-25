@@ -14,12 +14,12 @@ const categories = [
 	'Закрытые',
 ];
 
-export default function Categories() {
+const Categories: React.FC = () => {
 	const activeCategory = useSelector(selectActiveCategory);
 
 	const dispatch = useDispatch();
 
-	const onClickCategory = (index) => {
+	const onClickCategory = (index: number) => {
 		dispatch(setCategoryId(index));
 	};
 
@@ -40,4 +40,6 @@ export default function Categories() {
 			</ul>
 		</div>
 	);
-}
+};
+
+export default Categories;

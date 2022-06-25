@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import qs from 'qs';
 
 import Categories from '../Components/Categories';
@@ -12,10 +11,7 @@ import Pagination from '../Components/Pagination';
 import { selectFilters, setFilters } from '../redux/slices/filterSlice';
 import { fetchPizzas, selectPizzas } from '../redux/slices/pizzaSlice';
 
-export default function Home() {
-	// const [pizzas, setPizzas] = useState([]);
-	// const [isLoading, setLoading] = useState(true);
-
+const Home: React.FC = () => {
 	const { items, status } = useSelector(selectPizzas);
 
 	const isMounted = useRef(false);
@@ -33,6 +29,7 @@ export default function Home() {
 		const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
 		const search = searchValue ? `&search=${searchValue}` : '';
 		dispatch(
+			// @ts-ignore
 			fetchPizzas({
 				category,
 				sortBy,
@@ -41,22 +38,6 @@ export default function Home() {
 				currentPage,
 			})
 		);
-		// 	setLoading(true);
-		// 	try {
-		// 		const res = await axios.get(
-		// 			`https://6285265d3060bbd34745a43b.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
-		// 		);
-		// 		setPizzas(res.data);
-		// 	} catch (error) {
-		// 		console.log('ERROR', error);
-		// 	} finally {
-		// 		setLoading(false);
-		// 	}
-		// };
-		// console.log();
-		// if (!isSearch.current) {
-		// 	console.log('сработало условие 2го');
-		// 	getPizzas();
 	};
 
 	// Если есть параметры в строке - отправляет их в редакс
@@ -123,9 +104,13 @@ export default function Home() {
 						</div>
 					)) ||
 					(status === 'success' &&
-						items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />))}
+						items.map((pizza: any) => (
+							<PizzaBlock key={pizza.id} {...pizza} />
+						)))}
 			</div>
 			<Pagination />
 		</>
 	);
-}
+};
+
+export default Home;

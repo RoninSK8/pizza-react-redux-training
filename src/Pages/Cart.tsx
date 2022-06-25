@@ -6,16 +6,26 @@ import CartEmpty from '../Components/CartEmpty';
 import CartItem from '../Components/CartItem';
 import { clearCart, selectCart } from '../redux/slices/cartSlice';
 
-const Cart = () => {
+type cartItemType = {
+	id: string;
+	title: string;
+	imageUrl: string;
+	size: number;
+	type: number;
+	price: number;
+	count: number;
+};
+
+const Cart: React.FC = () => {
 	const dispatch = useDispatch();
 	const { items } = useSelector(selectCart);
 
-	const totalCount = items.reduce((count, item) => {
+	const totalCount = items.reduce((count: number, item: cartItemType) => {
 		count += item.count;
 		return count;
 	}, 0);
 
-	const totalCost = items.reduce((cost, item) => {
+	const totalCost = items.reduce((cost: number, item: cartItemType) => {
 		cost += item.count * item.price;
 		return cost;
 	}, 0);
@@ -104,7 +114,7 @@ const Cart = () => {
 				</div>
 			</div>
 			{items &&
-				items.map((item) => {
+				items.map((item: cartItemType) => {
 					return <CartItem key={item.id + item.type + item.size} {...item} />;
 				})}
 			<div className="cart__bottom">
@@ -122,7 +132,6 @@ const Cart = () => {
 					<Link
 						to={'/'}
 						className="button button--outline button--add go-back-btn"
-						href="/"
 					>
 						<svg
 							width="8"

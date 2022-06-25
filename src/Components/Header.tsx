@@ -4,14 +4,14 @@ import Search from './Search';
 import { useSelector } from 'react-redux';
 import { selectCart } from '../redux/slices/cartSlice';
 
-export default function Header() {
+const Header: React.FC = () => {
 	const { items } = useSelector(selectCart);
-	const totalCount = items.reduce((count, item) => {
+	const totalCount = items.reduce((count: number, item: any) => {
 		count += item.count;
 		return count;
 	}, 0);
 
-	const totalCost = items.reduce((cost, item) => {
+	const totalCost = items.reduce((cost: number, item: any) => {
 		cost += item.count * item.price;
 		return cost;
 	}, 0);
@@ -67,4 +67,6 @@ export default function Header() {
 			</div>
 		</div>
 	);
-}
+};
+
+export default Header;

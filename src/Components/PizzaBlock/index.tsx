@@ -6,30 +6,49 @@ import { addItem, selectCart } from '../../redux/slices/cartSlice';
 
 const typeNames = ['тонкое', 'традиционное'];
 
-export default function PizzaBlock({
+type pizzaType = {
+	id: string;
+	title: string;
+	imageUrl: string;
+	sizes: number[];
+	types: number[];
+	prices: { size: number; price: string }[];
+};
+
+type cartItemType = {
+	id: string;
+	title: string;
+	imageUrl: string;
+	size: number;
+	type: number;
+	price: number;
+	count: number;
+};
+
+const PizzaBlock: React.FC<pizzaType> = ({
 	id,
 	title,
 	imageUrl,
 	sizes,
 	types,
 	prices,
-}) {
+}) => {
 	const [activeType, setActiveType] = useState(types[0]);
 	const [activeSize, setActiveSize] = useState(sizes[0]);
 	const dispatch = useDispatch();
 
 	const { items } = useSelector(selectCart);
 	const currentCount = items
-		.filter((item) => item.id === id)
-		.reduce((count, item) => {
+		.filter((item: cartItemType) => item.id === id)
+		.reduce((count: number, item: cartItemType) => {
 			count += item.count;
 			return count;
 		}, 0);
 
-	const handleChooseType = (i) => {
+	const handleChooseType = (i: number) => {
 		setActiveType(i);
 	};
-	const handleChooseSize = (i) => {
+	const handleChooseSize = (i: number) => {
 		setActiveSize(i);
 	};
 
@@ -112,4 +131,6 @@ export default function PizzaBlock({
 			</div>
 		</div>
 	);
-}
+};
+
+export default PizzaBlock;
