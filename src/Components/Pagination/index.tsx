@@ -7,15 +7,15 @@ import styles from './Pagination.module.scss';
 
 const Pagination: React.FC = () => {
 	const dispatch = useDispatch();
-	const handlePageChange = (event: any) => {
-		dispatch(setCurrentPage(event.selected + 1));
+	const handlePageChange = (idx: number) => {
+		dispatch(setCurrentPage(idx));
 	};
 	return (
 		<ReactPaginate
 			className={styles.root}
 			breakLabel="..."
 			nextLabel=">"
-			onPageChange={handlePageChange}
+			onPageChange={(event) => handlePageChange(event.selected + 1)}
 			pageRangeDisplayed={4}
 			pageCount={3}
 			previousLabel="<"

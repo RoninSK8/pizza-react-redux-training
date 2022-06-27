@@ -20,9 +20,9 @@ const Search: React.FC = () => {
 	);
 
 	const handleChange = useCallback(
-		(e: any) => {
-			setValue(e.target.value);
-			debouncedSearch(e.target.value);
+		(event: React.ChangeEvent<HTMLInputElement>) => {
+			setValue(event.target.value);
+			debouncedSearch(event.target.value);
 		},
 		[debouncedSearch]
 	);
