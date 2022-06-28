@@ -4,6 +4,8 @@ import Search from './Search';
 import { useSelector } from 'react-redux';
 import { selectCart } from '../redux/slices/cartSlice';
 
+import pizzaLogo from '../assets/img/pizza-logo.svg';
+
 const Header: React.FC = () => {
 	const { items } = useSelector(selectCart);
 	const totalCount = items.reduce((count: number, item: any) => {
@@ -20,7 +22,7 @@ const Header: React.FC = () => {
 			<div className="container">
 				<Link to="/">
 					<div className="header__logo">
-						<img width="38" src="./img/pizza-logo.svg" alt="Pizza logo" />
+						<img width="38" src={pizzaLogo} alt="Pizza logo" />
 						<div>
 							<h1>React Pizza</h1>
 							<p>самая вкусная пицца во вселенной</p>
