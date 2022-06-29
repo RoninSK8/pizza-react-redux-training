@@ -35,7 +35,7 @@ const Home: React.FC = () => {
 				sortBy,
 				order,
 				search,
-				currentPage,
+				currentPage: String(),
 			})
 		);
 	};
@@ -48,13 +48,17 @@ const Home: React.FC = () => {
 			console.log(window.location.search);
 
 			const params = qs.parse(window.location.search.substring(1));
-			console.log(params);
 			const sort = sortTypes.find(
 				(sortType) => sortType.sortProperty === params.sortProperty
 			);
-			// console.log(sortTypes.find());
-
-			dispatch(setFilters({ ...params, sort }));
+			dispatch(
+				setFilters({
+					currentPage: Number(params.currentPage),
+					categoryId: Number(params.categoryId),
+					searchValue: String(params.search),
+					sort: sort || sortTypes[0],
+				})
+			);
 			isSearch.current = true;
 		}
 	}, []);

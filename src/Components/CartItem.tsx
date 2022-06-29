@@ -1,21 +1,16 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { addItem, removeItem, removeCategory } from '../redux/slices/cartSlice';
+import {
+	addItem,
+	removeItem,
+	removeBuild,
+	CartItemType,
+} from '../redux/slices/cartSlice';
 
 const typeNames = ['тонкое', 'традиционное'];
 
-type pizzaBlockType = {
-	id: string;
-	title: string;
-	imageUrl: string;
-	size: number;
-	type: number;
-	price: number;
-	count: number;
-};
-
-const CartItem: React.FC<pizzaBlockType> = ({
+const CartItem: React.FC<CartItemType> = ({
 	id,
 	title,
 	imageUrl,
@@ -26,36 +21,37 @@ const CartItem: React.FC<pizzaBlockType> = ({
 }) => {
 	const dispatch = useDispatch();
 	const handleAddItem = () => {
-		dispatch(
-			addItem({
-				id,
-				size,
-				type,
-				price,
-				count: 1,
-			})
-		);
+		const item: CartItemType = {
+			title,
+			imageUrl,
+			id,
+			size,
+			type,
+			price,
+			count: 1,
+		};
+		dispatch(addItem(item));
 	};
 
 	const handleRemoveItem = () => {
-		dispatch(
-			removeItem({
-				id,
-				size,
-				type,
-				price,
-				count: 1,
-			})
-		);
+		const item = {
+			title,
+			imageUrl,
+			id,
+			size,
+			type,
+			price,
+			count: 1,
+		};
+		dispatch(removeItem(item));
 	};
-	const handleRemoveCategory = () => {
-		dispatch(
-			removeCategory({
-				id,
-				size,
-				type,
-			})
-		);
+	const handleRemoveBuild = () => {
+		const build = {
+			id,
+			size,
+			type,
+		};
+		dispatch(removeBuild(build));
 	};
 	return (
 		<div className="content__items">
@@ -121,7 +117,7 @@ const CartItem: React.FC<pizzaBlockType> = ({
 				</div>
 				<div className="cart__item-remove">
 					<div
-						onClick={handleRemoveCategory}
+						onClick={handleRemoveBuild}
 						className="button button--outline button--circle"
 					>
 						<svg

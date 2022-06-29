@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { addItem, selectCart } from '../../redux/slices/cartSlice';
+import {
+	addItem,
+	CartItemType,
+	selectCart,
+} from '../../redux/slices/cartSlice';
 
 const typeNames = ['тонкое', 'традиционное'];
 
-type pizzaType = {
+type PizzaType = {
 	id: string;
 	title: string;
 	imageUrl: string;
@@ -15,17 +19,17 @@ type pizzaType = {
 	prices: { size: number; price: string }[];
 };
 
-type cartItemType = {
-	id: string;
-	title: string;
-	imageUrl: string;
-	size: number;
-	type: number;
-	price: number;
-	count: number;
-};
+// type cartItemType = {
+// 	id: string;
+// 	title: string;
+// 	imageUrl: string;
+// 	size: number;
+// 	type: number;
+// 	price: number;
+// 	count: number;
+// };
 
-const PizzaBlock: React.FC<pizzaType> = ({
+const PizzaBlock: React.FC<PizzaType> = ({
 	id,
 	title,
 	imageUrl,
@@ -39,8 +43,8 @@ const PizzaBlock: React.FC<pizzaType> = ({
 
 	const { items } = useSelector(selectCart);
 	const currentCount = items
-		.filter((item: cartItemType) => item.id === id)
-		.reduce((count: number, item: cartItemType) => {
+		.filter((item: CartItemType) => item.id === id)
+		.reduce((count: number, item: CartItemType) => {
 			count += item.count;
 			return count;
 		}, 0);
@@ -52,22 +56,21 @@ const PizzaBlock: React.FC<pizzaType> = ({
 		setActiveSize(i);
 	};
 
-	const currentItemPrice = prices.filter(
-		(price) => price.size === activeSize
-	)[0].price;
+	const currentItemPrice = Number(
+		prices.filter((price) => price.size === activeSize)[0].price
+	);
 
 	const handleAddItem = () => {
-		dispatch(
-			addItem({
-				id,
-				title,
-				imageUrl,
-				size: activeSize,
-				type: activeType,
-				price: currentItemPrice,
-				count: 1,
-			})
-		);
+		const item: CartItemType = {
+			id,
+			title,
+			imageUrl,
+			size: activeSize,
+			type: activeType,
+			price: currentItemPrice,
+			count: 1,
+		};
+		dispatch(addItem(item));
 		console.log(activeSize);
 		console.log(currentItemPrice);
 	};
