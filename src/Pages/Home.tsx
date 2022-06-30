@@ -10,6 +10,7 @@ import Skeleton from '../Components/PizzaBlock/Skeleton';
 import Pagination from '../Components/Pagination';
 import { selectFilters, setFilters } from '../redux/slices/filterSlice';
 import { fetchPizzas, selectPizzas } from '../redux/slices/pizzaSlice';
+import { useAppDispatch } from '../redux/store';
 
 const Home: React.FC = () => {
 	const { items, status } = useSelector(selectPizzas);
@@ -18,7 +19,7 @@ const Home: React.FC = () => {
 	const isSearch = useRef(false);
 
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 
 	const { sort, categoryId, searchValue, currentPage } =
 		useSelector(selectFilters);
@@ -29,7 +30,6 @@ const Home: React.FC = () => {
 		const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
 		const search = searchValue ? `&search=${searchValue}` : '';
 		dispatch(
-			// @ts-ignore
 			fetchPizzas({
 				category,
 				sortBy,
