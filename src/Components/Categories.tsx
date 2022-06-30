@@ -1,9 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-	selectActiveCategory,
-	setCategoryId,
-} from '../redux/slices/filterSlice';
+import { selectActiveCategory } from '../redux/filter/selectors';
+import { setCategoryId } from '../redux/filter/slice';
 
 const categories = [
 	'Все',

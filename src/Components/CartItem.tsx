@@ -1,12 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-
-import {
-	addItem,
-	removeItem,
-	removeBuild,
-	CartItemType,
-} from '../redux/slices/cartSlice';
+import { addItem, removeItem, removeBuild } from '../redux/cart/slice';
+import { CartItemType } from '../redux/cart/types';
 
 const typeNames = ['тонкое', 'традиционное'];
 

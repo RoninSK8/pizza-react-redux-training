@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import CartEmpty from '../Components/CartEmpty';
 
 import CartItem from '../Components/CartItem';
-import { clearCart, selectCart } from '../redux/slices/cartSlice';
+import { selectCart } from '../redux/cart/selectors';
+import { clearCart } from '../redux/cart/slice';
 
 type cartItemType = {
 	id: string;
