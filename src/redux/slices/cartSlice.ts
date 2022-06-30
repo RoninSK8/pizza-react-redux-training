@@ -53,15 +53,8 @@ const cartSlice = createSlice({
 					item.size === payload.size &&
 					item.type === payload.type
 			);
-			if (currentItem && currentItem.count > 1) {
+			if (currentItem) {
 				currentItem.count -= 1;
-			} else {
-				state.items = state.items.filter(
-					(item) =>
-						item.id !== payload.id ||
-						item.size !== payload.size ||
-						item.type !== payload.type
-				);
 			}
 		},
 		removeBuild(state, action: PayloadAction<PizzaBuild>) {

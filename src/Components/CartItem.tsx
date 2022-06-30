@@ -34,7 +34,7 @@ const CartItem: React.FC<CartItemType> = ({
 	};
 
 	const handleRemoveItem = () => {
-		const item = {
+		const item: CartItemType = {
 			title,
 			imageUrl,
 			id,
@@ -69,6 +69,7 @@ const CartItem: React.FC<CartItemType> = ({
 				</div>
 				<div className="cart__item-count">
 					<button
+						disabled={count === 1}
 						onClick={handleRemoveItem}
 						className="button button--outline button--circle cart__item-count-minus"
 					>
