@@ -1,11 +1,13 @@
 import './scss/app.scss';
 import { Routes, Route } from 'react-router-dom';
+import loadable from '@loadable/component';
 
 import Home from './Pages/Home';
-import NotFound from './Pages/NotFound';
-import Cart from './Pages/Cart';
-import PizzaPage from './Pages/PizzaPage';
 import Layout from './Components/Layout';
+
+const Cart = loadable(() => import('./Pages/Cart'));
+const PizzaPage = loadable(() => import('./Pages/PizzaPage'));
+const NotFound = loadable(() => import('./Pages/NotFound'));
 
 function App() {
 	return (
