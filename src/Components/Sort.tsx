@@ -13,10 +13,11 @@ export const sortTypes: sortItem[] = [
 	{ name: 'алфавиту (ASC)', sortProperty: '-title' },
 ];
 
-const Sort: React.FC = () => {
+const Sort: React.FC = React.memo(() => {
 	const [isActive, setActive] = useState(false);
 	const sortRef = useRef<HTMLDivElement>(null);
 	const sort = useSelector(selectSort);
+	console.log('sortselected1', sort);
 	const dispatch = useDispatch();
 
 	const handleChooseSort = (sort: sortItem) => {
@@ -25,20 +26,23 @@ const Sort: React.FC = () => {
 	};
 
 	const handleSortPropertyChange = () => {
+		console.log('sortselected', sort);
 		const toggleSortOrder = (sort: sortItem) => {
 			const currentSortName = sort.name;
+			console.log('currentSortName', currentSortName);
 			if (sort.sortProperty.includes('-')) {
 				return {
-					name: `${currentSortName.split(' ')[0]} (ASC)`,
+					name: `${currentSortName.split(' ')[0]} (DESC)`,
 					sortProperty: sort.sortProperty.replace('-', ''),
 				};
 			}
 			return {
-				name: `${currentSortName.split(' ')[0]} (DESC)`,
+				name: `${currentSortName.split(' ')[0]} (ASC)`,
 				sortProperty: `-${sort.sortProperty}`,
 			};
 		};
 		const newSort = toggleSortOrder(sort);
+		console.log('newSort', newSort);
 		dispatch(setSortType({ ...newSort }));
 	};
 
@@ -99,6 +103,6 @@ const Sort: React.FC = () => {
 			)}
 		</div>
 	);
-};
+});
 
 export default Sort;
