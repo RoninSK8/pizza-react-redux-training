@@ -41,7 +41,7 @@ const Home: React.FC = () => {
 				sortBy,
 				order,
 				search,
-				currentPage: String(),
+				currentPage: String(currentPage),
 			})
 		);
 	};
@@ -97,11 +97,6 @@ const Home: React.FC = () => {
 			</div>
 			<h2 className="content__title">Все пиццы</h2>
 			<div className="content__items">
-				{/* {status === 'loading'
-					? [...new Array(6)].map((_, i) => <Skeleton key={i} />)
-					: items &&
-					  items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)} */}
-
 				{(status === 'loading' &&
 					[...new Array(6)].map((_, i) => <Skeleton key={i} />)) ||
 					(status === 'error' && (
