@@ -1,7 +1,12 @@
 .root {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+	@media (max-width: 410px) {
+		gap: 5px;
+	}
 	li {
 		display: inline-block;
-
 		a {
 			text-align: center;
 			width: 45px;
@@ -9,7 +14,6 @@
 			height: 45px;
 			border: 1px solid #fe5f1e;
 			border-radius: 30px;
-			margin-right: 10px;
 			cursor: pointer;
 			display: inline-block;
 			color: #fe5f1e;

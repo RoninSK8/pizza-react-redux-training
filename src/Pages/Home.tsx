@@ -95,7 +95,7 @@ const Home: React.FC = () => {
 				<Categories />
 				<Sort />
 			</div>
-			<h2 className="content__title">Все пиццы</h2>
+			<h2 className="content__title">Пиццы</h2>
 			<div className="content__items">
 				{(status === 'loading' &&
 					[...new Array(6)].map((_, i) => <Skeleton key={i} />)) ||

@@ -20,6 +20,9 @@
 			color: $orange;
 			border-bottom: 1px dashed $orange;
 			cursor: pointer;
+			@media (max-width: 410px) {
+				border-bottom: 1px $orange;
+			}
 		}
 	}
 

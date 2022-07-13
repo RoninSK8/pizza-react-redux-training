@@ -94,6 +94,9 @@
 		background-color: rgba(255, 255, 255, 0.25);
 		margin-left: 14px;
 		margin-right: 14px;
+		@media (max-width: 515px) {
+			display: none;
+		}
 	}
 
 	&--add {
@@ -127,6 +130,12 @@
 			position: relative;
 			top: -1px;
 			left: 3px;
+		}
+	}
+
+	&--cost {
+		@media (max-width: 515px) {
+			display: none;
 		}
 	}
 

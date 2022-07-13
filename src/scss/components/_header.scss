@@ -6,15 +6,22 @@
 
 	.container {
 		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
 		justify-content: space-between;
+		row-gap: 30px;
 	}
-
+	&__cart {
+		margin-left: 20px;
+	}
 	&__logo {
 		display: flex;
 
 		img {
 			margin-right: 15px;
+			@media (max-width: 410px) {
+				display: none;
+			}
 		}
 
 		h1 {
@@ -23,10 +30,16 @@
 			letter-spacing: 1%;
 			text-transform: uppercase;
 			font-weight: 800;
+			@media (max-width: 410px) {
+				font-size: 20px;
+			}
 		}
 
 		p {
 			color: #7b7b7b;
+			@media (max-width: 650px) {
+				display: none;
+			}
 		}
 	}
 }

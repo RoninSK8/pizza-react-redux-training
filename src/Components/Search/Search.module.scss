@@ -1,15 +1,22 @@
 .root {
 	position: relative;
-	left: -120px;
+	margin-left: auto;
+	@media (max-width: 1017px) {
+		order: 3;
+	}
 }
 
 .input {
 	border: 1px solid rgba(0, 0, 0, 0.1);
 	padding: 12px 20px;
 	padding-left: 42px;
-	width: 400px;
+	min-width: 255px;
+	width: 350px;
 	border-radius: 10px;
 	font-size: 16px;
+	@media (max-width: 410px) {
+		max-width: 255px;
+	}
 
 	&:focus {
 		border: 1px solid rgba(0, 0, 0, 0.2);
