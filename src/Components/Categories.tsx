@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectActiveCategory } from '../redux/filter/selectors';
-import { setCategoryId } from '../redux/filter/slice';
+import { setCategoryId, setCurrentPage } from '../redux/filter/slice';
 
 const categories = ['Все', 'Мясные', 'Сырные', 'Острые', 'Овощные', 'Особые'];
 
@@ -11,6 +11,7 @@ const Categories: React.FC = () => {
 	const dispatch = useDispatch();
 
 	const onClickCategory = (index: number) => {
+		dispatch(setCurrentPage(1));
 		dispatch(setCategoryId(index));
 	};
 

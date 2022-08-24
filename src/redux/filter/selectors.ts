@@ -4,3 +4,4 @@ export const selectFilters = (state: RootState) => state.filter;
 export const selectActiveCategory = (state: RootState) =>
 	state.filter.categoryId;
 export const selectSort = (state: RootState) => state.filter.sort;
+export const selectCurrentPage = (state: RootState) => state.filter.currentPage;
