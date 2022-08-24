@@ -48,11 +48,7 @@ const Home: React.FC = () => {
 
 	// Если есть параметры в строке - отправляет их в редакс
 	useEffect(() => {
-		console.log('сработал 1й');
 		if (window.location.search) {
-			console.log('сработало условие 1го');
-			console.log(window.location.search);
-
 			const params = qs.parse(window.location.search.substring(1));
 			const sort = sortTypes.find(
 				(sortType) => sortType.sortProperty === params.sortProperty
@@ -76,9 +72,7 @@ const Home: React.FC = () => {
 
 	// Отправляет параметры в строку если это не первый рендер
 	useEffect(() => {
-		console.log('сработал 3й');
 		if (isMounted.current) {
-			console.log('сработало условие 3го');
 			const queryString = qs.stringify({
 				sortProperty: sort.sortProperty,
 				categoryId,
