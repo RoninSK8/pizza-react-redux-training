@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import debounce from 'lodash.debounce';
 
 import styles from './Search.module.scss';
-import { setSearchValue } from '../../redux/filter/slice';
+import { setCurrentPage, setSearchValue } from '../../redux/filter/slice';
 
 const Search: React.FC = () => {
 	const [value, setValue] = useState('');
@@ -12,6 +12,7 @@ const Search: React.FC = () => {
 
 	const debouncedSearch = useCallback(
 		debounce((value: string) => {
+			dispatch(setCurrentPage(1));
 			dispatch(setSearchValue(value.trim()));
 		}, 250),
 		[]
