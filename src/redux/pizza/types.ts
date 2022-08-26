@@ -18,4 +18,5 @@ export type Item = {
 export interface PizzaSliceState {
 	items: Item[];
 	status: 'loading' | 'success' | 'error';
+	filteredItemsCount: number;
 }

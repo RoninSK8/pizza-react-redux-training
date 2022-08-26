@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchPizzas } from './asyncActions';
+import { fetchPizzas, getFilteredItemsCount } from './asyncActions';
 import { PizzaSliceState } from './types';
 
 const initialState: PizzaSliceState = {
 	items: [],
 	status: 'loading',
+	filteredItemsCount: 0,
 };
 
 const pizzaSlice = createSlice({
@@ -28,6 +29,9 @@ const pizzaSlice = createSlice({
 			.addCase(fetchPizzas.rejected, (state) => {
 				state.status = 'error';
 				state.items = [];
+			})
+			.addCase(getFilteredItemsCount.fulfilled, (state, action) => {
+				state.filteredItemsCount = action.payload;
 			});
 	},
 });

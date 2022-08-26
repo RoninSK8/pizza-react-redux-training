@@ -7,7 +7,10 @@ import { sortTypes } from '../Components/Sort';
 import { useAppDispatch } from '../redux/store';
 import { selectFilters } from '../redux/filter/selectors';
 import { setFilters } from '../redux/filter/slice';
-import { fetchPizzas } from '../redux/pizza/asyncActions';
+import {
+	fetchPizzas,
+	getFilteredItemsCount,
+} from '../redux/pizza/asyncActions';
 import { selectPizzas } from '../redux/pizza/selectors';
 
 import {
@@ -27,24 +30,10 @@ const Home: React.FC = () => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 
+	const itemsPerPage = 8;
+
 	const { sort, categoryId, searchValue, currentPage } =
 		useSelector(selectFilters);
-
-	const getPizzas = async () => {
-		const category = categoryId > 0 ? `category=${categoryId}` : '';
-		const sortBy = sort.sortProperty.replace('-', '');
-		const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
-		const search = searchValue ? `&search=${searchValue}` : '';
-		dispatch(
-			fetchPizzas({
-				category,
-				sortBy,
-				order,
-				search,
-				currentPage: String(currentPage),
-			})
-		);
-	};
 
 	// Если есть параметры в строке - отправляет их в редакс
 	useEffect(() => {
@@ -63,12 +52,36 @@ const Home: React.FC = () => {
 			);
 			isSearch.current = true;
 		}
-	}, []);
+	}, [dispatch]);
 
 	//
 	useEffect(() => {
+		const getPizzas = async () => {
+			const category = categoryId > 0 ? `category=${categoryId}` : '';
+			const sortBy = sort.sortProperty.replace('-', '');
+			const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
+			const search = searchValue ? `&search=${searchValue}` : '';
+			dispatch(
+				fetchPizzas({
+					category,
+					sortBy,
+					order,
+					search,
+					currentPage: String(currentPage),
+				})
+			);
+			dispatch(
+				getFilteredItemsCount({
+					category,
+					sortBy,
+					order,
+					search,
+					currentPage: String(currentPage),
+				})
+			);
+		};
 		getPizzas();
-	}, [sort, categoryId, searchValue, currentPage]);
+	}, [sort, categoryId, searchValue, currentPage, dispatch]);
 
 	// Отправляет параметры в строку если это не первый рендер
 	useEffect(() => {
@@ -81,7 +94,7 @@ const Home: React.FC = () => {
 			navigate(`?${queryString}`);
 		}
 		isMounted.current = true;
-	}, [sort.sortProperty, categoryId, currentPage]);
+	}, [sort.sortProperty, categoryId, currentPage, navigate]);
 
 	return (
 		<>
@@ -103,9 +116,9 @@ const Home: React.FC = () => {
 						</div>
 					)) ||
 					(status === 'success' &&
-						items.map((pizza: any) => (
-							<PizzaBlock key={pizza.id} {...pizza} />
-						)))}
+						items
+							.slice(0, itemsPerPage)
+							.map((pizza: any) => <PizzaBlock key={pizza.id} {...pizza} />))}
 			</div>
 			<Pagination />
 		</>
