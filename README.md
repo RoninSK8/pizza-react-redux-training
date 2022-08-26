@@ -6,6 +6,8 @@
 
 <h3 align="center"></a>Сайт доставки пиццы, выполненный на React + Redux Toolkit + TypeScript</h3>
 
+![React_Pizza_screen](https://user-images.githubusercontent.com/72770677/186822837-a955808a-0f0a-4728-86a5-6cac23250f1b.PNG)
+
 ### [Ссылка на проект](https://pizza-react-redux-ts.vercel.app)
 
 ## Основные технологии:
