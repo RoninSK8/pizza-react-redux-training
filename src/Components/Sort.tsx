@@ -5,12 +5,12 @@ import { setSortType } from '../redux/filter/slice';
 import { sortItem } from '../redux/filter/types';
 
 export const sortTypes: sortItem[] = [
-	{ name: 'популярности (DESC)', sortProperty: 'rating' },
-	{ name: 'популярности (ASC)', sortProperty: '-rating' },
-	{ name: 'цене (DESC)', sortProperty: 'price' },
-	{ name: 'цене (ASC)', sortProperty: '-price' },
-	{ name: 'алфавиту (DESC)', sortProperty: 'title' },
-	{ name: 'алфавиту (ASC)', sortProperty: '-title' },
+	{ name: 'популярности ↑', sortProperty: '-rating' },
+	{ name: 'популярности ↓', sortProperty: 'rating' },
+	{ name: 'цене ↑', sortProperty: '-price' },
+	{ name: 'цене ↓', sortProperty: 'price' },
+	{ name: 'алфавиту ↑', sortProperty: '-title' },
+	{ name: 'алфавиту ↓', sortProperty: 'title' },
 ];
 
 const Sort: React.FC = () => {
@@ -29,12 +29,12 @@ const Sort: React.FC = () => {
 			const currentSortName = sort.name;
 			if (sort.sortProperty.includes('-')) {
 				return {
-					name: `${currentSortName.split(' ')[0]} (DESC)`,
+					name: `${currentSortName.split(' ')[0]} ↓`,
 					sortProperty: sort.sortProperty.replace('-', ''),
 				};
 			}
 			return {
-				name: `${currentSortName.split(' ')[0]} (ASC)`,
+				name: `${currentSortName.split(' ')[0]} ↑`,
 				sortProperty: `-${sort.sortProperty}`,
 			};
 		};
